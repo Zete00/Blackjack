@@ -5,9 +5,9 @@ Number = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King",
 
 playAgain = "Yes"
 userInput = ""
+Tokens = 1000
 
 while playAgain == "Yes":
-    Tokens = 1000
 
     Bet = int(input(f"How much would you like to bet? (You have {Tokens} tokens.): "))
     while Tokens - Bet < 0:
@@ -175,22 +175,43 @@ while playAgain == "Yes":
                 playerNewCardValue = 10
             elif playerNewCardNumber == "Ace":
                 playerNewCardValue = 11
-            if sum(playerCardValues) + playerNewCardValue >= 22:
-                playerNewCardValue = 1
+                if sum(playerCardValues) + 11 >= 22:
+                    playerNewCardValue = 1
             else:
                 playerNewCardValue = int(playerNewCardNumber)
 
             playerCardValues.append(playerNewCardValue)
             playerCards.append(playerNewCardNumber)
 
+            res = str(playerCards)[1: -1]
             print()
             print(f"Your new card is: {playerNewCardNumber} of {playerNewCardType} ({playerNewCardValue}).")
-            print(f"Your hand is: {playerCards}")
+            print(f"Your hand is: {res} ({sum(playerCardValues)})")
 
             if sum(playerCardValues) >= 22:
                 print("You've busted!")
                 Finished = True
         
+        elif userInput == "Double":
+            if Bet > Tokens:
+                print("You can't double your bet!")
+            else:
+                Tokens -= Bet
+                Bet = Bet*2
+                print(f"Your bet has doubled to {Bet}.")
+                print(f"Your token balance has changed to: {Tokens}.")
         
-
-    
+        elif userInput == "Surrender":
+            RUsure = input("Are you sure? (Y/N): ")
+            while RUsure not in ["N", "Y"]:
+                RUsure = input("Are you sure? (Y/N): ")
+            if RUsure == "Y":
+                print("Half of your bet has been returned!")
+                Tokens += Bet/2
+                print(f"Your token balance has changed to: {Tokens}")
+                Finished = True
+        else:
+            if Bet > Tokens:
+                print("You can't split due to your token balance")
+            else:
+                print("You've split your hand.")
