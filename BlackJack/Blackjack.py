@@ -3,11 +3,11 @@ import random
 Type = ["Clubs", "Diamonds", "Hearts", "Spades"]
 Number = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
 
-playAgain = "Yes"
+playAgain = "Y"
 userInput = ""
 Tokens = 1000
 
-while playAgain == "Yes":
+while playAgain == "Y":
 
     Bet = int(input(f"How much would you like to bet? (You have {Tokens} tokens.): "))
     while Tokens - Bet < 0:
@@ -201,7 +201,7 @@ while playAgain == "Yes":
                 print(f"Your bet has doubled to {Bet}.")
                 print(f"Your token balance has changed to: {Tokens}.")
         
-        elif userInput == "Surrender":
+        else:
             RUsure = input("Are you sure? (Y/N): ")
             while RUsure not in ["N", "Y"]:
                 RUsure = input("Are you sure? (Y/N): ")
@@ -210,8 +210,15 @@ while playAgain == "Yes":
                 Tokens += Bet/2
                 print(f"Your token balance has changed to: {Tokens}")
                 Finished = True
-        else:
-            if Bet > Tokens:
-                print("You can't split due to your token balance")
+    if Finished is True:
+        playAgain = input("Would you like to play again? (Y/N): ")
+        while playAgain not in ["Y", "N"]:
+            playAgain = input("Would you like to play again? (Y/N): ")
+        if playAgain == "N":
+            Sure = input("Are you sure? All your progress will be lost! (Y/N): ")
+            while Sure not in ["Y", "N"]:
+                Sure = input("Are you sure? All your progress will be lost! (Y/N): ")
+            if Sure == "N":
+                playAgain == "N"
             else:
-                print("You've split your hand.")
+                playAgain == "Y"
